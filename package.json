@@ -16,14 +16,15 @@
   "dependencies": {
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
+    "mongodb": "^7.0.0",
     "mongoose": "^8.19.3"
   },
   "devDependencies": {
-  "jest": "^30.2.0",
-  "nodemon": "^3.1.10",
-  "supertest": "^7.1.4",
-  "typescript": "^5.5.0",
-  "@types/node": "^20.5.1",
-  "@types/jest": "^29.5.3"
+    "@types/jest": "^29.5.3",
+    "@types/node": "^20.5.1",
+    "jest": "^30.2.0",
+    "nodemon": "^3.1.10",
+    "supertest": "^7.1.4",
+    "typescript": "^5.5.0"
   }
 }
