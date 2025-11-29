@@ -1,0 +1,14 @@
+{
+  "javascript.suggest.enabled": true,
+  "typescript.suggest.enabled": true,
+  "javascript.validate.enable": true,
+  "typescript.validate.enable": true,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "typescript.autoImportSuggestions.enabled": true,
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.preferences.quoteStyle": "single",
+  "js/ts.implicitProjectConfig.checkJs": true,
+  "typescript.tsserver.log": "off",
+  "typescript.tsserver.maxTsServerMemory": 4096
+}
