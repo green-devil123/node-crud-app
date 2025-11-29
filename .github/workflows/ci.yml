@@ -3,7 +3,7 @@ name: Node CI
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build-test:
@@ -26,3 +26,12 @@ jobs:
 
       - name: Build Docker Image
         run: docker build -t node-crud-app .
+      
+      - name: Login DockerHub
+        run: |
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Push image
+        run: |
+          docker tag node-crud-app tarunengineering/node-crud-app:latest
+          docker push tarunengineering/node-crud-app:latest
