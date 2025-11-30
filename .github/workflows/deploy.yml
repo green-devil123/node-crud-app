@@ -1,53 +1,41 @@
-name: Node CI/CD
+name: Local CI/CD
 
 on:
   push:
     branches: [ "master" ]
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Install deps
+      - name: Install
         run: npm install
 
-      - name: Run tests
+      - name: Test
         run: npm test
 
-      - name: Create ENV File
+      - name: Write env
         run: |
-          echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> .env
-          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
+          echo "MONGO_URI=${{ secrets.MONGO_URI }}" > .env
           echo "PORT=${{ secrets.PORT }}" >> .env
 
-      - name: Build Docker Image
-        run: docker build -t node-crud-app .
-
-      - name: Deploy to Ubuntu Server
+      - name: SSH Deploy to your Ubuntu
         uses: appleboy/ssh-action@v1
-
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_KEY }}
-
           script: |
-            cd ~/node-crud-app || exit 1
-
-            git pull origin main
-
-            docker compose down
-
-            docker compose build
-            docker compose up -d
-
-            echo "✅ Deployment complete!"
+            cd ~/node-crud-app
+            git pull origin master
+            docker-compose down
+            docker-compose build
+            docker-compose up -d
