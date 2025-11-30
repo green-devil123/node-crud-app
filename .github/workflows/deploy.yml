@@ -16,8 +16,8 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install
-        run: npm install
+      # - name: Install
+      #   run: npm install
 
       # - name: Test
       #   run: npm test
@@ -26,6 +26,15 @@ jobs:
         run: |
           echo "MONGO_URI=${{ secrets.MONGO_URI }}" > .env
           echo "PORT=${{ secrets.PORT }}" >> .env
+          
+      - name: Setup SSH agent and test connection
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.SSH_KEY }}
+
+      - name: SSH connectivity check
+        run: |
+          ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 -vvv ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} echo connected
 
       - name: SSH Deploy to your Ubuntu
         uses: appleboy/ssh-action@v1
